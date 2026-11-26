@@ -1,0 +1,55 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\sources\\overloadstop_calibrator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{493064B8-AF84-472A-9F2C-09DC045AF355}|overloadstop_calibrator\\overloadstop_calibrator.csproj|d:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{493064B8-AF84-472A-9F2C-09DC045AF355}|overloadstop_calibrator\\overloadstop_calibrator.csproj|solutionrelative:overloadstop_calibrator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{493064B8-AF84-472A-9F2C-09DC045AF355}|overloadstop_calibrator\\overloadstop_calibrator.csproj|D:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{493064B8-AF84-472A-9F2C-09DC045AF355}|overloadstop_calibrator\\overloadstop_calibrator.csproj|solutionrelative:overloadstop_calibrator\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "overloadstop_calibrator\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\MainWindow.xaml.cs",
+              "RelativeToolTip": "overloadstop_calibrator\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAewHAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-26T02:46:42.923Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%3"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "overloadstop_calibrator\\MainWindow.xaml",
+              "ToolTip": "D:\\sources\\overloadstop_calibrator\\overloadstop_calibrator\\MainWindow.xaml",
+              "RelativeToolTip": "overloadstop_calibrator\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-11-25T12:43:00.943Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

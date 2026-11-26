@@ -1,0 +1,14 @@
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\bin\Debug\overloadstop_calibrator.exe
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\bin\Debug\overloadstop_calibrator.pdb
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.csproj.AssemblyReference.cache
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\MainWindow.g.cs
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\App.g.cs
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator_MarkupCompile.cache
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator_MarkupCompile.lref
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\MainWindow.baml
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.g.resources
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.Properties.Resources.resources
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.csproj.GenerateResource.cache
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.csproj.CoreCompileInputs.cache
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.exe
+D:\sources\overloadstop_calibrator\overloadstop_calibrator\obj\Debug\overloadstop_calibrator.pdb
