@@ -5,11 +5,545 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:overloadstop_calibrator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Overload Stop Calibrator"
+        Height="660" Width="1040" MinHeight="620" MinWidth="960"
+        Background="#F3F4F6"
+        FontFamily="Segoe UI" FontSize="13"
+        WindowStartupLocation="CenterScreen" Focusable="True">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Primary" Color="#1F4E79"/>
+        <SolidColorBrush x:Key="PrimaryHover" Color="#2B6399"/>
+        <SolidColorBrush x:Key="Danger" Color="#B42318"/>
+        <SolidColorBrush x:Key="Border" Color="#D0D5DD"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#667085"/>
+        <SolidColorBrush x:Key="TextDark" Color="#101828"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF"/>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackground}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14"/>
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+
+        <Style x:Key="InputCombo" TargetType="ComboBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="Background" Value="{StaticResource Primary}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{StaticResource PrimaryHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#F2F4F7"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="{StaticResource Danger}"/>
+        </Style>
+
+        <Style x:Key="AppTabControl" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TabPanel x:Name="HeaderPanel" Grid.Row="0" Panel.ZIndex="1"
+                                      Margin="0,0,0,0" IsItemsHost="True"
+                                      KeyboardNavigation.TabIndex="1"/>
+
+                            <Border Grid.Row="1" Background="{StaticResource CardBackground}"
+                                    BorderBrush="#98A2B3" BorderThickness="1,0,1,1"
+                                    CornerRadius="0,8,8,8" Padding="14">
+                                <ContentPresenter ContentSource="SelectedContent"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AppTabItem" TargetType="TabItem">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="Padding" Value="22,8"/>
+            <Setter Property="Margin" Value="0,4,4,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="bd" Background="#E4E7EC"
+                                BorderBrush="#98A2B3" BorderThickness="1,1,1,1"
+                                CornerRadius="6,6,0,0" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#F2F4F7"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{StaticResource CardBackground}"/>
+                                <Setter TargetName="bd" Property="BorderThickness" Value="1,1,1,0"/>
+                                <Setter Property="Foreground" Value="{StaticResource Primary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DataHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F2F4F7"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="DataCellStyle" TargetType="DataGridCell">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+        </Style>
+
+        <Style x:Key="AppDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EAECF0"/>
+            <Setter Property="RowBackground" Value="#FFFFFF"/>
+            <Setter Property="AlternatingRowBackground" Value="#F9FAFB"/>
+            <Setter Property="RowHeight" Value="30"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="ColumnHeaderStyle" Value="{StaticResource DataHeaderStyle}"/>
+            <Setter Property="CellStyle" Value="{StaticResource DataCellStyle}"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+        </Style>
+
+        <!-- Text and date cells: left aligned, 12px gap on each side -->
+        <Style x:Key="TextCell" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0,12,0"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Numeric cells: right aligned, 12px gap on each side -->
+        <Style x:Key="NumberCell" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0,12,0"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="HeaderLeft" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataHeaderStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="HeaderRight" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataHeaderStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+
+        <Storyboard x:Key="BlinkStoryboard" RepeatBehavior="Forever">
+            <ColorAnimation Storyboard.TargetName="countdownBrush"
+                    Storyboard.TargetProperty="Color"
+                    From="#EEF2F6" To="#FCD34D"
+                    Duration="0:0:0.4" AutoReverse="True"/>
+        </Storyboard>
+    </Window.Resources>
+
     <Grid>
-        <ComboBox x:Name="cmbPort" HorizontalAlignment="Left" Margin="58,34,0,0" VerticalAlignment="Top" Width="147" Height="43" FontSize="16" VerticalContentAlignment="Center"/>
-        <ComboBox x:Name="cmbBaudRate" HorizontalAlignment="Left" Margin="295,34,0,0" VerticalAlignment="Top" Width="147" Height="43" FontSize="16" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="594,34,0,0" VerticalAlignment="Top" Height="43" Width="147" FontSize="18" FontWeight="Bold" Click="btnConnect_Click"/>
-        <Label x:Name="lblDisplay" Content="0.00000" HorizontalAlignment="Center" VerticalAlignment="Center" Width="460" Height="106" FontSize="36" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Grid x:Name="mainGrid" Margin="16" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TabControl x:Name="mainTabs" Style="{StaticResource AppTabControl}"
+                        SelectionChanged="mainTabs_SelectionChanged">
+
+                <!-- TAB 1: CALIBRATION -->
+                <TabItem Header="Calibration" Style="{StaticResource AppTabItem}">
+                    <Grid x:Name="calibrationGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Header: connection, serial number, apply load -->
+                        <Border Grid.Row="0" Style="{StaticResource Card}" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Port" Style="{StaticResource FieldLabel}" Margin="0,0,8,0"/>
+                                <ComboBox x:Name="cmbPort" Grid.Column="1" Width="100" Style="{StaticResource InputCombo}"/>
+
+                                <TextBlock Grid.Column="2" Text="Baud" Style="{StaticResource FieldLabel}" Margin="16,0,8,0"/>
+                                <ComboBox x:Name="cmbBaudRate" Grid.Column="3" Width="110" Style="{StaticResource InputCombo}"/>
+
+                                <Button x:Name="btnConnect" Grid.Column="4" Content="Connect" Width="110" Margin="16,0,0,0"
+                        Style="{StaticResource PrimaryButton}" Height="30" Click="btnConnect_Click"/>
+
+                                <StackPanel Grid.Column="6" Orientation="Horizontal">
+                                    <TextBlock Text="Serial No." Style="{StaticResource FieldLabel}" Margin="0,0,8,0"/>
+                                    <TextBox x:Name="txtSerial" Width="120" Style="{StaticResource InputBox}"
+                             LostFocus="txtSerial_LostFocus" KeyDown="txtSerial_KeyDown"/>
+
+                                    <StackPanel Orientation="Horizontal" Height="30" Margin="12,0,0,0">
+                                        <TextBlock Text="Apply Load." Style="{StaticResource FieldLabel}" Margin="0,0,8,0"/>
+                                        <TextBox x:Name="txtApplyLoad" Width="70" Style="{StaticResource InputBox}" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Body: Results | Live reading (with count and status) | Controls -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="260"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="180"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left: results, spread evenly to fill the height -->
+                            <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,14,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Text="RESULTS" Style="{StaticResource SectionTitle}"/>
+
+                                    <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                                        <TextBlock Text="R1 (load on)" Style="{StaticResource FieldLabel}"/>
+                                        <Label x:Name="lblR1" Content="--" FontSize="24" FontWeight="SemiBold" Padding="0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" VerticalAlignment="Center">
+                                        <TextBlock Text="R2 (load on)" Style="{StaticResource FieldLabel}"/>
+                                        <Label x:Name="lblR2" Content="--" FontSize="24" FontWeight="SemiBold" Padding="0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="3" VerticalAlignment="Center">
+                                        <TextBlock Text="R1 - R2" Style="{StaticResource FieldLabel}"/>
+                                        <Label x:Name="lblResult" Content="--" FontSize="24" FontWeight="Bold" Padding="0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Middle: live reading, Tare/Reset, then count and status centered below -->
+                            <Border Grid.Column="1" Style="{StaticResource Card}" Margin="0,0,14,0">
+                                <StackPanel>
+                                    <TextBlock Text="LIVE READING" Style="{StaticResource SectionTitle}"/>
+                                    <Label x:Name="lblDisplay" Content="0.00000 mV/V"
+                                       FontSize="50" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextDark}"
+                                       HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0"/>
+
+                                    <Label x:Name="lblStatus" Content="Idle"
+                           HorizontalAlignment="Center" Margin="0,12,0,0"
+                           FontSize="20" FontWeight="SemiBold"/>
+
+                                    <Border x:Name="pnlCountdown" CornerRadius="6" Padding="10,0"
+MinWidth="110" Height="40" HorizontalAlignment="Center" Margin="0,24,0,0">
+                                        <Border.Background>
+                                            <SolidColorBrush x:Name="countdownBrush" Color="#EEF2F6"/>
+                                        </Border.Background>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="Countdown  " Style="{StaticResource FieldLabel}"/>
+                                            <Label x:Name="lblTareCountDown" Content="" Padding="0" FontSize="20" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <UniformGrid Columns="2" Margin="14,14,0,0" HorizontalAlignment="Stretch">
+                                        <Button x:Name="btnTare" Content="Tare" Margin="0,10,8,0" IsEnabled="False"
+Style="{StaticResource SecondaryButton}" Click="btnTare_Click"/>
+                                        <Button x:Name="btnReset" Content="Reset" Margin="0,10,8,0" IsEnabled="False"
+Style="{StaticResource SecondaryButton}" Click="btnReset_Click"/>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Right: controls, taller buttons to use the space -->
+                            <Border Grid.Column="2" Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Text="CONTROLS" Style="{StaticResource SectionTitle}"/>
+
+                                    <Button x:Name="btnStart" Grid.Row="1" Content="Start Calibration" Width="150" Height="60"
+                            Margin="0,0,0,10" IsEnabled="False" Padding="8,0"
+                            Style="{StaticResource PrimaryButton}" Click="btnStart_Click"/>
+
+                                    <Button x:Name="btnStop" Grid.Row="2" Content="Stop" Width="150" Height="60"
+                            VerticalAlignment="Top" IsEnabled="False"
+                            Style="{StaticResource DangerButton}" Click="btnStop_Click"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- Footer: operator info on the left, logout on the right -->
+                        <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,14,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Name="lblOperatorInfo" Grid.Column="0" Text=""
+                           VerticalAlignment="Center" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextDark}"/>
+
+                                <Button x:Name="btnLogout" Grid.Column="1" Content="Logout" Height="32" Padding="14,0"
+                        Style="{StaticResource SecondaryButton}" Click="btnLogout_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Hidden: limit values are still filled by the database lookup and read by the code -->
+                        <StackPanel x:Name="pnlLimits" Visibility="Collapsed">
+                            <TextBox x:Name="txtScrewMin" Style="{StaticResource InputBox}" IsReadOnly="True"
+                     />
+                            <TextBox x:Name="txtScrewMax" Style="{StaticResource InputBox}" IsReadOnly="True"
+                    />
+                            <TextBox x:Name="txtResultMin" Style="{StaticResource InputBox}" IsReadOnly="True"/>
+                            <TextBox x:Name="txtResultMax" Style="{StaticResource InputBox}" IsReadOnly="True"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <!-- TAB 2: DATA -->
+                <TabItem Header="Data" Style="{StaticResource AppTabItem}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="Serial No." Style="{StaticResource FieldLabel}" Margin="0,0,8,0"/>
+                            <TextBox x:Name="txtDataSerial" Width="160" Style="{StaticResource InputBox}"/>
+                            <Button x:Name="btnDataSearch" Content="Search" Width="100" Margin="8,0,0,0"
+                                    Style="{StaticResource SecondaryButton}" Click="btnDataSearch_Click"/>
+                            <Button x:Name="btnDataRefresh" Content="Refresh" Width="100" Margin="8,0,0,0"
+                                    Style="{StaticResource SecondaryButton}" Click="btnDataRefresh_Click"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="dgData" Grid.Row="1" Style="{StaticResource AppDataGrid}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding [id]}"
+                        Width="60"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        ElementStyle="{StaticResource NumberCell}"/>
+
+                                <DataGridTextColumn Header="Serial No." Binding="{Binding [serial_number]}"
+                        Width="130"
+                        HeaderStyle="{StaticResource HeaderLeft}"
+                        ElementStyle="{StaticResource TextCell}"/>
+
+                                <DataGridTextColumn Header="Operator ID" Binding="{Binding [operator_id]}"
+                        Width="100"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        ElementStyle="{StaticResource NumberCell}"/>
+
+                                <DataGridTextColumn Header="Profile ID" Binding="{Binding [profile_id]}"
+                        Width="100"
+                        HeaderStyle="{StaticResource HeaderLeft}"
+                        ElementStyle="{StaticResource TextCell}"/>
+
+                                <DataGridTextColumn Header="First Load" Binding="{Binding [load_first], StringFormat={}{0:0.00000}}"
+                        Width="120"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        ElementStyle="{StaticResource NumberCell}"/>
+
+                                <DataGridTextColumn Header="Second Load" Binding="{Binding [load_second], StringFormat={}{0:0.00000}}"
+                        Width="120"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        ElementStyle="{StaticResource NumberCell}"/>
+
+                                <DataGridTextColumn Header="Difference" Binding="{Binding [load_differance], StringFormat={}{0:0.00000}}"
+                        Width="120"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        ElementStyle="{StaticResource NumberCell}"/>
+
+                                <DataGridTextColumn Header="Created At" Binding="{Binding [created_at], StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                        Width="*"
+                        HeaderStyle="{StaticResource HeaderLeft}"
+                        ElementStyle="{StaticResource TextCell}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <TextBlock x:Name="lblDataInfo" Grid.Row="2" Margin="0,10,0,0" Style="{StaticResource FieldLabel}"/>
+                    </Grid>
+                </TabItem>
+
+            </TabControl>
+
+            <Grid Grid.Row="1" Margin="4,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="SW125 - Overload Stop Calibration Software"
+               Style="{StaticResource FieldLabel}" FontSize="12"
+               HorizontalAlignment="Left"/>
+
+                <TextBlock Grid.Column="1" Text="V1.0.0"
+               Style="{StaticResource FieldLabel}" FontSize="12"
+               HorizontalAlignment="Right" Margin="0,0,4,0"/>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="gridLogin" Visibility="Visible" Background="#F3F4F6">
+            <!-- Company / app logo -->
+            <Image Source="/Assets/3S_Fabrications.png"
+           Height="48" Stretch="Uniform"
+           HorizontalAlignment="Left" VerticalAlignment="Top"
+           Margin="16"
+           RenderOptions.BitmapScalingMode="HighQuality"/>
+
+            <!-- Login card, still centered -->
+            <Border Style="{StaticResource Card}"
+            Width="360" Padding="32" CornerRadius="12" Background="White"
+            HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.15" Color="Black"/>
+                </Border.Effect>
+
+                <StackPanel>
+                    <TextBlock Text="OPERATOR LOGIN" Style="{StaticResource SectionTitle}"
+                       HorizontalAlignment="Center"/>
+
+                    <!-- Badge illustration in a soft circle -->
+                    <Border Width="120" Height="120" CornerRadius="60" Background="#EEF2FF"
+                    HorizontalAlignment="Center" Margin="0,16,0,16">
+                        <Image Source="/Assets/login_badge.png"
+                                Height="90" Stretch="Uniform"
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Margin="16"
+                                RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Border>
+
+                    <TextBlock x:Name="lblScanStatus" Text="Scan your operator ID"
+                       FontSize="16" FontWeight="SemiBold" TextAlignment="Center"
+                       Foreground="{StaticResource TextDark}" Margin="0,0,0,4"/>
+
+                    <TextBlock Text="Hold your badge to the reader to continue"
+                       FontSize="12" Foreground="#6B7280"
+                       TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+                    <TextBlock x:Name="lblLoginMessage" Foreground="#B42318" FontSize="12"
+                       TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,12"
+                       Visibility="Collapsed"/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
